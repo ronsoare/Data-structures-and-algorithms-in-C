@@ -15,10 +15,12 @@ typedef struct Node{
 // struct for linked list
 typedef struct List{
     Node *first;
+    int length;
 } List;
 // function that inicialize a list;
 void inicialize( List *pont){
     pont -> first = NULL;
+    pont -> length = 0;
 }
 // funciont that use to implement a inserction in a linked list;
 void insert( List *pont, Data info){
@@ -26,6 +28,7 @@ void insert( List *pont, Data info){
     aux -> data = info;
     aux -> next = pont -> first;
     pont -> first = aux;
+    pont -> length += 1;
 }
 // function that show each element ( student and id) of linked list
 void showList( List *pont){
@@ -59,5 +62,6 @@ int main(){
     printf("Hom many students would you like to read: ");
     scanf("%d%*c",&num);
     readList(&list, &student, num);
+    printf("length of list: %d\n", list.length);
     showList(&list);
 }
