@@ -30,16 +30,31 @@ void showList( List *pont){
         aux = aux -> next;
     }
 }
-void readStudent( Data data){
+void readStudent( Data *data){
     printf("type the name: ");
-    scanf("%[^\n]%*c", data.name);
+    scanf("%[^\n]%*c", data -> name);
     printf("Type the id: ");
-    scanf("%d%*c", &data.id);
+    scanf("%d%*c", &data -> id);
+}
+void readList( List *pont, Data *data, unsigned length){
+     unsigned i  = 0;
+     for ( i; i < length; i++){
+        readStudent(data);
+        insert(pont,*data);
+     }
+}
+void showStudent( List *pont){
+    No *aux = pont -> first;
+    while ( aux ){
+        printf("name = %s\n", aux -> data.name);
+        printf("id = %d\n", aux -> data.id);
+        aux = aux -> next;
+    }
 }
 int main(){
     Data student;
-    List lista;
-    char name[100];
-    scanf("%[^\n]%*c", name);
-    printf("%s\n",name);
+    List list;
+    inicialize(&list);
+    readList(&list, &student, 5);
+    showList(&list);
 }
