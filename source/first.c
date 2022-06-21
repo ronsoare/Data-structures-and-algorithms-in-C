@@ -55,22 +55,23 @@ void readList( List *pont, Data *data, unsigned length){
      }
 }
 // first way to verifiy if one especific element to be in list.
-int searchElementInList( List *pont, char *name){
+Data  * searchElementInList( List *pont, char *name){
     Node * aux = pont -> first;
     while ( aux ){
-        if ( !strcmp(name, aux->data.name) ){
-            return 1;
+        if ( !strcasecmp(name, aux->data.name) ){
+            return &aux ->data;
         }
         aux = aux -> next;
     }
-    return 0;
-}
+    return NULL;
+}   
 int main(){
     Data student;
+    Data *result;
     List list;
     char name[50];
     inicialize(&list);
-    int num, i, result;
+    int num, i;
     printf("Hom many students would you like to read: ");
     scanf("%d%*c",&num);
     readList(&list, &student, num);
@@ -80,10 +81,12 @@ int main(){
         scanf("%[^\n]%*c", name);
         result = searchElementInList(&list, name);
         if ( result ){
-            printf("Student is present in the list.\n");
+            printf("Student is present in the list:\n");
+            printf("student = %s\n", result ->name);
+            printf("id = %d\n", result -> id);
         }
         else{
-            printf("Student is not present in list.\n");
+            printf("Student %s is not present in thet list.\n",name);
         }
         printf("Would like to continue YES [1] or NO [0]:  ");
         scanf("%d%*c", &i);
