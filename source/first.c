@@ -65,9 +65,31 @@ Data  * searchElementInList( List *pont, char *name){
     }
     return NULL;
 }   
+int removeElement( List *point, int id){
+    if ( point -> first ){
+        Node *aux, *tmp;
+        aux = point -> first;
+        if ( aux -> data.id == id ){
+            tmp = aux;
+            aux = tmp -> next;
+            free(tmp);
+            return 1;
+        }
+        while ( aux -> next ){
+            if ( aux -> next -> data.id == id ){
+                tmp = aux -> next;
+                aux = tmp -> next;
+                free(tmp);
+                return 1;
+            }
+            aux = aux -> next;
+        }
+    }
+    return 0;
+}   
 int main(){
     Data student;
-    Data *result;
+    int result, id;
     List list;
     char name[50];
     inicialize(&list);
@@ -77,17 +99,16 @@ int main(){
     readList(&list, &student, num);
     i = 1;
     while ( i ){
-        printf("What student are you looking: ");
-        scanf("%[^\n]%*c", name);
-        result = searchElementInList(&list, name);
+        printf("What student are you looking to remove: ");
+        scanf("%d%*c", &id);
+        result = removeElement(&list, id);
         if ( result ){
-            printf("Student is present in the list:\n");
-            printf("student = %s\n", result ->name);
-            printf("id = %d\n", result -> id);
+            printf("Element removed.\n");
         }
         else{
-            printf("Student %s is not present in thet list.\n",name);
+            printf("Imposible  remove that element.\n");
         }
+        showList( &list);
         printf("Would like to continue YES [1] or NO [0]:  ");
         scanf("%d%*c", &i);
     }
