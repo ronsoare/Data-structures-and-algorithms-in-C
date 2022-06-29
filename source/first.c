@@ -68,17 +68,17 @@ Data  * searchElementInList( List *pont, char *name){
 int removeElement( List *point, int id){
     if ( point -> first ){
         Node *aux, *tmp;
-        aux = point -> first;
-        if ( aux -> data.id == id ){
-            tmp = aux;
-            aux = tmp -> next;
+        if ( point -> first->data.id == id ){
+            tmp = point -> first;
+            point -> first = tmp -> next;
             free(tmp);
             return 1;
         }
+        aux = point -> first;
         while ( aux -> next ){
             if ( aux -> next -> data.id == id ){
                 tmp = aux -> next;
-                aux = tmp -> next;
+                aux -> next = tmp -> next;
                 free(tmp);
                 return 1;
             }
