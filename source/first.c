@@ -35,6 +35,19 @@ void insert( List *pont, Data info){
     pont -> first = aux;
     pont -> length += 1;
 }
+void insertEnd( List *pont, Data info){
+    Node *aux = (Node*) malloc(sizeof(Node));
+    aux -> data = info;
+    aux -> next = NULL;
+    if ( pont -> last ){
+        pont -> last -> next = aux;
+    }
+    else{
+        pont -> first = aux;
+    }
+    pont -> last = aux;
+    pont -> length += 1;
+}
 // function that show each element ( student and id) of linked list
 void showList( List *pont){
     Node *aux = pont -> first;
@@ -56,7 +69,7 @@ void readList( List *pont, Data *data, unsigned length){
      unsigned i  = 0;
      for ( i; i < length; i++){
         readStudent(data);
-        insert(pont,*data);
+        insertEnd(pont,*data);
      }
 }
 // first way to verifiy if one especific element to be in list.
@@ -100,29 +113,14 @@ int removeElement( List *point, int id){
 }   
 int main(){
     Data student;
-    int result, id;
+    int result, id, num, i;
     List list;
     char name[50];
     inicialize(&list);
-    int num, i;
     printf("Hom many students would you like to read: ");
     scanf("%d%*c",&num);
     readList(&list, &student, num);
     i = 1;
-    while ( i ){
-        printf("What student are you looking to remove: ");
-        scanf("%d%*c", &id);
-        result = removeElement(&list, id);
-        if ( result ){
-            printf("Element removed.\n");
-        }
-        else{
-            printf("Imposible  remove that element.\n");
-        }
-        showList( &list);
-        printf("Would like to continue YES [1] or NO [0]:  ");
-        scanf("%d%*c", &i);
-    }
-    printf("Last element of list:\nname =  %s\n", list.last->data.name);
-    printf("id = %d\n", list.last->data.id);
+    showList( &list);
+    printf("Length of list = %d \nid of last element = %d \nid of the first element = %d \n", list.length, list.last->data.id, list.first->data.id);
 }
