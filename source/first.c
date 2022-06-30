@@ -15,11 +15,13 @@ typedef struct Node{
 // struct for linked list
 typedef struct List{
     Node *first;
+    Node *last;
     int length;
 } List;
 // function that inicialize a list;
 void inicialize( List *pont){
     pont -> first = NULL;
+    pont -> last = NULL;
     pont -> length = 0;
 }
 // funciont that use to implement a inserction in a linked list;
@@ -27,6 +29,9 @@ void insert( List *pont, Data info){
     Node *aux = (Node*) malloc(sizeof(Node));
     aux -> data = info;
     aux -> next = pont -> first;
+    if ( !pont -> first ){
+        pont -> last = aux;
+    }
     pont -> first = aux;
     pont -> length += 1;
 }
@@ -71,6 +76,9 @@ int removeElement( List *point, int id){
         if ( point -> first->data.id == id ){
             tmp = point -> first;
             point -> first = tmp -> next;
+            if ( !point -> first ){
+                point -> last = NULL;
+            }
             free(tmp);
             return 1;
         }
@@ -78,6 +86,9 @@ int removeElement( List *point, int id){
         while ( aux -> next ){
             if ( aux -> next -> data.id == id ){
                 tmp = aux -> next;
+                if ( tmp == point -> last ){
+                    point -> last = aux;
+                }
                 aux -> next = tmp -> next;
                 free(tmp);
                 return 1;
@@ -112,4 +123,6 @@ int main(){
         printf("Would like to continue YES [1] or NO [0]:  ");
         scanf("%d%*c", &i);
     }
+    printf("Last element of list:\nname =  %s\n", list.last->data.name);
+    printf("id = %d\n", list.last->data.id);
 }
